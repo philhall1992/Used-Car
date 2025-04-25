@@ -1,0 +1,22 @@
+def add_car():
+    if 'user_id' not in session:
+        flash("Please log in to add listing.", "error")
+        return redirect(url_for('login'))
+    if request.method == 'POST':
+        make        = request.form['make']
+        model       = request.form['model']
+        price        = request.form['price']
+        year       = request.form['year']
+        mileage     = request.form['mileage']
+        information = request.form['information']
+        db = get_db()
+        db.execute('''
+            INSERT INTO cars
+              (make, model, price, year, mileage, information)
+            VALUES (?, ?, ?, ?, ?, ?)
+        ''', (make, model, price, year, mileage, information))
+        db.commit()
+        db.close()
+        flash("Listing added!", "success")
+        return redirect(url_for('cars'))
+    return render_template('add_car.html')
