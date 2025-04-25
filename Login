@@ -1,0 +1,15 @@
+def login():
+    if request.method == 'LOGIN':
+        username = request.form['username']
+        password   = request.form['password']
+        db = get_db()
+        user = db.execute('SELECT * FROM users WHERE username = ?', (username,)).fetchone()
+        db.close()
+        if username and check_password_hash(user['password'], password):
+            session['user_id']   = user['id']
+            session['username']  = user['username']
+            flash("Success.", "success")
+            return redirect(url_for('cars'))
+        else:
+            flash("Invalid credentials.", "error")
+    return render_template('login.html')
