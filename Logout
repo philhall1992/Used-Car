@@ -1,0 +1,4 @@
+def logout():
+    session.clear()
+    flash("Logout successful", "info")
+    return redirect(url_for('login'))
