@@ -1,0 +1,14 @@
+CREATE TABLE IF NOT EXISTS cars (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    description TEXT,
+    price REAL)
+
+sample_cars =
+    ('Jeep Patriot', '2009 model, fair condition, 30,000 miles', 5000),
+    ('Jeep Wrangler', '2010 model, like new, 100,000 miles', 4000),
+    ('Honda Civic', '2022 model, less than 20,000 miles, 19,000 miles', 9500),
+    ('Honda Accord', '2011 model, great first car, 95,000 miles', 3000)
+
+
+cursor.executemany('INSERT INTO cars (name, description, price) VALUES (?, ?, ?)', sample_cars)
