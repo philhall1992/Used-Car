@@ -1,0 +1,12 @@
+def cars():
+    db = get_db()
+    cursor = db.cursor()
+    search = request.form.get('search', '')
+    if search:
+        cursor.execute("SELECT * FROM cars WHERE make LIKE ? OR model LIKE ?", 
+                       (f'%{search}%', f'%{search}%'))
+    else:
+        cursor.execute("SELECT * FROM cars")
+    cars = cursor.fetchall()
+    db.close()
+    return render_template('cars.html', cars=cars, search=search)
